@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>abc</groupId>
+    <artifactId>Bankware2</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>dtrott</id>
+            <url>http://maven.davidtrott.com/repository</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.5.0.Final</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!--gRPC-->
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <configuration>
+                    <protocArtifact>com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}</protocArtifact>
+                    <pluginId>grpc-java</pluginId>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}</pluginArtifact>
+                    <!--<outputBaseDirectory>${basedir}/src/main/java/</outputBaseDirectory>-->
+                    <!--<outputDirectory>${basedir}/src/main/java/</outputDirectory>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>compile-custom</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--THRIFT-->
+            <plugin>
+                <groupId>org.apache.thrift.tools</groupId>
+                <artifactId>maven-thrift-plugin</artifactId>
+                <version>0.1.11</version>
+                <configuration>
+                    <!--<thriftExecutable>/usr/local/bin/thrift</thriftExecutable>-->
+                    <thriftExecutable>C:/Thrift/thrift-0.11.0.exe</thriftExecutable>
+                    <thriftSourceRoot>${basedir}/src/main/thrift</thriftSourceRoot>
+                    <!--<thriftFile>${basedir}/src/test/resources/thrift/tutorial.thrift</thriftFile>-->
+                    <!--<recurse>true</recurse>-->
+                    <!--<includeDirectories>-->
+                    <!--<include>${basedir}/src/test/resources/thrift/include</include>-->
+                    <!--</includeDirectories>-->
+                    <!--<outDirectory>${project.build.directory}/generate-sources/thrift/gen-java</outDirectory>-->
+                    <outputDirectory>${project.build.directory}/generated-sources/thrift</outputDirectory>
+                    <generator>java</generator>
+                </configuration>
+                <executions>
+                    <!--  <execution>
+                          <phase>generate-sources</phase>
+                          <goals>
+                              <goal>compile</goal>
+                          </goals>
+                      </execution>-->
+                    <execution>
+                        <id>thrift-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>thrift-test-sources</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>25.0-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.8.0-beta2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.11.0</version>
+            <type>pom</type>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.apache.thrift.tools</groupId>-->
+        <!--<artifactId>maven-thrift-plugin</artifactId>-->
+        <!--<version>0.1.11</version>-->
+        <!--</dependency>-->
+        <!--        <dependency>
+                    <groupId>org.apache.thrift</groupId>
+                    <artifactId>thrift-maven-plugin</artifactId>
+                    &lt;!&ndash;<version>0.10.0</version>&ndash;&gt;
+                    &lt;!&ndash;DOWNED DUE TO ERROR &ndash;&gt;
+        &lt;!&ndash;
+                    [ERROR] thrift failed output:
+
+                    [ERROR] thrift failed error: [FAILURE:generation:1] Error: unknown option java:hashcode
+        &ndash;&gt;
+
+                    <version>0.9.3</version>
+                </dependency>-->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <version>1.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>1.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>1.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>thrift-maven-plugin</artifactId>
+            <version>0.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+        <!--THRIFT PLUGIN -->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.thrift.tools</groupId>-->
+        <!--<artifactId>maven-thrift-plugin</artifactId>-->
+        <!--<version>0.1.11</version>-->
+        <!--</dependency>-->
+    </dependencies>
+</project>

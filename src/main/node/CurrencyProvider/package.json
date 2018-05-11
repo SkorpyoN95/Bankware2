@@ -1,0 +1,18 @@
+{
+  "name": "currencyprovider",
+  "version": "1.0.0",
+  "description": "Service which provides with currency rate",
+  "main": "currency_provider.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "Dominik Chojny",
+  "license": "ISC",
+  "dependencies": {
+    "fixer-api": "^1.2.7",
+    "grpc": "^1.11.3"
+  }
+}

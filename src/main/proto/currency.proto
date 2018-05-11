@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "currency";
+
+package currency;
+
+service CurrencyProvider{
+    rpc RegisterBank(Bank) returns(stream CurrencyRate);
+}
+
+enum Currency{
+    PLN = 0;    //polski złoty
+    EUR = 1;    //euro
+    USD = 2;    //dolar amerykański
+    GBP = 3;    //funt szterling
+    CHF = 4;    //frank szwajcarski
+    RUB = 5;    //rubel
+    CNY = 6;    //yuan (Chiny)
+    JPY = 7;    //jen (Japonia)
+}
+
+message Bank{
+    string name = 1;
+    Currency main = 2;
+    repeated Currency other = 3;
+}
+
+message CurrencyRate{
+    Currency base = 1;
+    Currency target = 2;
+    double rate = 3;
+}
